@@ -6,17 +6,18 @@ import (
 	"os"
 	"net/http"
 	"fmt"
+	"strconv"
 )
 
-const PORT = "3000";
+const PORT = 3000;
 
 func main() {
 	router := mux.NewRouter();
 
 	router.HandleFunc("/ping", PingHandler);
 
-	fmt.Print("Starting http server on http://localhost:"+PORT+"\n");
-	http.ListenAndServe(":"+PORT, handlers.LoggingHandler(os.Stdout, router));
+	fmt.Println("Starting http server on http://localhost:", PORT);
+	http.ListenAndServe(":"+strconv.Itoa(PORT), handlers.LoggingHandler(os.Stdout, router));
 }
 
 func PingHandler(w http.ResponseWriter, r *http.Request) {
