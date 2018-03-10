@@ -2,7 +2,8 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"log"
+	"github.com/gorilla/handlers"
+	"os"
 	"net/http"
 	"fmt"
 )
@@ -14,7 +15,8 @@ func main() {
 
 	router.HandleFunc("/ping", PingHandler);
 
-	log.Fatal(http.ListenAndServe(":"+PORT, router));
+	fmt.Print("Starting http server on http://localhost:"+PORT+"\n");
+	http.ListenAndServe(":"+PORT, handlers.LoggingHandler(os.Stdout, router));
 }
 
 func PingHandler(w http.ResponseWriter, r *http.Request) {
